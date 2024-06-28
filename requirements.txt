@@ -1,0 +1,8 @@
+fastapi
+gunicorn
+SQLAlchemy
+passlib
+PyJWT
+python-dateutil
+pytest
+asyncpg
