@@ -6,7 +6,7 @@ from typing import List
 
 from core.exceptions import CustomException
 from core.logging import Logging
-from core.middleware import ResponseLogMiddleware
+from core.middleware import ResponseLogMiddleware, SQLAlchemyMiddleware
 
 
 def init_listeners(app_: FastAPI) -> None:
@@ -27,6 +27,7 @@ def make_middleware() -> List[Middleware]:
             allow_methods=["*"],
             allow_headers=["*"],
         ),
+        Middleware(SQLAlchemyMiddleware),
         Middleware(ResponseLogMiddleware),
     ]
     return middleware

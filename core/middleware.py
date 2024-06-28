@@ -1,8 +1,12 @@
 from typing import Optional
+from uuid import uuid4
+
 
 from pydantic import BaseModel, Field
 from starlette.datastructures import Headers
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
+
+from core.db import set_session_context, reset_session_context, session
 
 
 class ResponseInfo(BaseModel):
@@ -35,3 +39,20 @@ class ResponseLogMiddleware:
             await send(message)
 
         await self.app(scope, receive, _logging_send)
+
+
+class SQLAlchemyMiddleware:
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        session_id = str(uuid4())
+        context = set_session_context(session_id=session_id)
+
+        try:
+            await self.app(scope, receive, send)
+        except Exception as e:
+            raise e
+        finally:
+            await session.remove()
+            reset_session_context(context=context)

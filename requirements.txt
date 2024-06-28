@@ -1,8 +1,8 @@
 fastapi
+pydantic
 gunicorn
 SQLAlchemy
-passlib
-PyJWT
 python-dateutil
 pytest
 asyncpg
+alembic 
