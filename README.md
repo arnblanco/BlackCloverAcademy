@@ -35,6 +35,9 @@ Asegúrate de tener instalado Docker y Docker Compose en tu sistema antes de com
 
 Una vez que la aplicación esté en funcionamiento, puedes interactuar con la API mediante herramientas como `curl` o un cliente HTTP como Postman.
 
+```bash
+http://localhost:8000/docs#/
+
 ## Endpoints Disponibles
 
 - **GET /solicitud**: Obtiene la lista de todos los estudiantes registrados.
