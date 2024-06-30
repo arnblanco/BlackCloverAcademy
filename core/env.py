@@ -59,7 +59,7 @@ class Config(BaseSettings):
         como la carga de variables de entorno desde un archivo .env específico para
         el entorno de desarrollo (.env.dev).
         """
-        env_file = ".env.dev"
+        env_file = ".env"
 
 
 # Instancia de Config para acceder a las variables de entorno y URLs de conexión
