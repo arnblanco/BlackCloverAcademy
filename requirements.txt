@@ -5,4 +5,7 @@ SQLAlchemy
 python-dateutil
 pytest
 asyncpg
-alembic 
+alembic
+pytest
+pytest-asyncio
+httpx

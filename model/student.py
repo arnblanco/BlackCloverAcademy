@@ -26,7 +26,7 @@ class Student(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(20), nullable=False)
     apellido = Column(String(20), nullable=False)
-    identificacion = Column(String(10), nullable=False, unique=True)
+    identificacion = Column(String(10), nullable=False)
     edad = Column(Integer, nullable=False)
     afinidad_magica = Column(String(20), nullable=False)
     grimorio = Column(String(25), nullable=False)

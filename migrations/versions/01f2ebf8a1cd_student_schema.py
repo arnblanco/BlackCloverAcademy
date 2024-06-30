@@ -29,8 +29,7 @@ def upgrade() -> None:
         sa.Column('afinidad_magica', sa.String(length=20), nullable=False),
         sa.Column('grimorio', sa.String(length=25), nullable=False),
         sa.Column('estado', sa.Boolean(), nullable=False),
-        sa.PrimaryKeyConstraint('id'),
-        sa.UniqueConstraint('identificacion')
+        sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

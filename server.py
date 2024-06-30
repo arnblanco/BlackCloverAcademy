@@ -6,13 +6,21 @@ This module defines endpoints to perform CRUD operations on student data.
 from fastapi import Depends, Request
 from fastapi.responses import JSONResponse
 from typing import List
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core import create_app
-from service.student import Studentservice
+from core.db import session
+from service.student import StudentService
 from schema.studen import CreateStudentRequest, UpdateStudentRequest, StudentResponse, FullStudentResponse
 
 # Start FastAPI application
 app = create_app()
+
+# Dependencia para obtener la sesión de la base de datos
+async def get_db_session() -> AsyncSession:
+    async with session() as db_session:
+        yield db_session
+
 
 @app.get('/')
 async def index(request: Request):
@@ -31,7 +39,7 @@ async def index(request: Request):
     "/solicitud",
     response_model=List[StudentResponse]
 )
-async def get_students_list(service: Studentservice = Depends(Studentservice)):
+async def get_students_list(db_session: AsyncSession = Depends(get_db_session)):
     """
     Endpoint to retrieve a list of all students.
 
@@ -41,6 +49,7 @@ async def get_students_list(service: Studentservice = Depends(Studentservice)):
     Returns:
     - List[StudentResponse]: A list of StudentResponse objects.
     """
+    service = StudentService(db_session)
     return await service.get_students()
 
 @app.post(
@@ -49,7 +58,7 @@ async def get_students_list(service: Studentservice = Depends(Studentservice)):
 )
 async def create_student(
     request: CreateStudentRequest,
-    service: Studentservice = Depends( Studentservice )
+    db_session: AsyncSession = Depends(get_db_session)
 ):
     """
     Endpoint to create a new student.
@@ -61,6 +70,7 @@ async def create_student(
     Returns:
     - StudentResponse: Newly created student details.
     """
+    service = StudentService(db_session)
     return await service.create_student( request )
 
 @app.put(
@@ -70,7 +80,7 @@ async def create_student(
 async def update_student(
     student_id: int,
     request: UpdateStudentRequest,
-    service: Studentservice = Depends(Studentservice)
+    db_session: AsyncSession = Depends(get_db_session)
 ):
     """
     Endpoint to update student details by ID.
@@ -83,6 +93,7 @@ async def update_student(
     Returns:
     - StudentResponse: Updated student details.
     """
+    service = StudentService(db_session)
     return await service.update_student( student_id, request )
 
 @app.patch(
@@ -91,7 +102,7 @@ async def update_student(
 )
 async def update_student_status(
     student_id: int,
-    service: Studentservice = Depends(Studentservice)
+    db_session: AsyncSession = Depends(get_db_session)
 ):
     """
     Endpoint to toggle the status of a student (active/inactive).
@@ -103,6 +114,7 @@ async def update_student_status(
     Returns:
     - StudentResponse: Updated student details.
     """
+    service = StudentService(db_session)
     return await service.update_student_status( student_id )
 
 @app.delete(
@@ -110,7 +122,7 @@ async def update_student_status(
 )
 async def delete_student(
     student_id: int,
-    service: Studentservice = Depends(Studentservice)
+    db_session: AsyncSession = Depends(get_db_session)
 ):
     """
     Endpoint to delete a student by ID.
@@ -122,13 +134,14 @@ async def delete_student(
     Returns:
     - bool: True if deletion was successful.
     """
+    service = StudentService(db_session)
     return await service.delete_student( student_id )
 
 @app.get(
     "/asignaciones",
     response_model=List[FullStudentResponse]
 )
-async def get_full_list(service: Studentservice = Depends(Studentservice)):
+async def get_full_list(db_session: AsyncSession = Depends(get_db_session)):
     """
     Endpoint to retrieve a list of all students.
 
@@ -138,4 +151,5 @@ async def get_full_list(service: Studentservice = Depends(Studentservice)):
     Returns:
     - List[FullStudentResponse]: A list of FullStudentResponse objects.
     """
+    service = StudentService(db_session)
     return await service.get_student_grimoire()
