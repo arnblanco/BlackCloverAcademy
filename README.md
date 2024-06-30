@@ -39,6 +39,10 @@ Una vez que la aplicación esté en funcionamiento, puedes interactuar con la AP
    ```bash
    http://localhost:8000/docs#/
 
+2. Utilizando api de postman, puede descargar la documentacion del siguiente enlace
+   ```bash
+   https://github.com/arnblanco/BlackCloverAcademy/blob/main/Black%20Clover%20Academy.postman_collection.json
+
 ## Endpoints Disponibles
 
 - **GET /solicitud**: Obtiene la lista de todos los estudiantes registrados.
