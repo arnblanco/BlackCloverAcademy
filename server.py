@@ -9,7 +9,7 @@ from typing import List
 
 from core import create_app
 from service.student import Studentservice
-from schema.studen import CreateStudentRequest, UpdateStudentRequest, StudentResponse
+from schema.studen import CreateStudentRequest, UpdateStudentRequest, StudentResponse, FullStudentResponse
 
 # Start FastAPI application
 app = create_app()
@@ -123,3 +123,19 @@ async def delete_student(
     - bool: True if deletion was successful.
     """
     return await service.delete_student( student_id )
+
+@app.get(
+    "/asignaciones",
+    response_model=List[FullStudentResponse]
+)
+async def get_full_list(service: Studentservice = Depends(Studentservice)):
+    """
+    Endpoint to retrieve a list of all students.
+
+    Args:
+    - service (Studentservice): Instance of Studentservice dependency.
+
+    Returns:
+    - List[FullStudentResponse]: A list of FullStudentResponse objects.
+    """
+    return await service.get_student_grimoire()

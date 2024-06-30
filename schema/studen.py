@@ -118,6 +118,37 @@ class StudentResponse(BaseModel):
     - identificacion (str): Número de identificación del estudiante.
     - edad (int): Edad del estudiante.
     - afinidad_magica (str): Afinidad mágica del estudiante.
+    - estado (bool): Estado del estudiante (activo/inactivo).
+
+    Configuración:
+    - orm_mode: Habilita el modo de ORM para serializar/deserializar objetos SQLAlchemy.
+    """
+    id: int
+    nombre: str
+    apellido: str
+    identificacion: str
+    edad: int
+    afinidad_magica: str
+    estado: bool
+
+    class Config:
+        orm_mode = True
+
+
+class FullStudentResponse(BaseModel):
+    """
+    Modelo Pydantic para la respuesta de datos de un estudiante.
+
+    Este modelo define la estructura de los datos que se devolverán como respuesta
+    al consultar información de un estudiante.
+
+    Atributos:
+    - id (int): Identificador único del estudiante.
+    - nombre (str): Nombre del estudiante.
+    - apellido (str): Apellido del estudiante.
+    - identificacion (str): Número de identificación del estudiante.
+    - edad (int): Edad del estudiante.
+    - afinidad_magica (str): Afinidad mágica del estudiante.
     - grimorio (str): Tipo de grimorio del estudiante.
     - estado (bool): Estado del estudiante (activo/inactivo).
 

@@ -45,6 +45,19 @@ class Studentservice:
         result = await session.execute(query)
         return result.scalars().all()
 
+
+    async def get_student_grimoire(self) -> List[Student]:
+        """
+        Obtiene todos los estudiantes.
+
+        Returns:
+        - List[Student]: Lista de objetos Student.
+        """
+        query = select(Student).where(Student.estado == True)
+        result = await session.execute(query)
+        return result.scalars().all()
+    
+
     async def create_student(self, request: CreateStudentRequest) -> Student:
         """
         Crea un nuevo estudiante en la base de datos.
